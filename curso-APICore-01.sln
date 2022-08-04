@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "curso-APICore-01", "curso-APICore-01.csproj", "{499C45A5-E2F5-4141-858A-9072C9BB3BE5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{499C45A5-E2F5-4141-858A-9072C9BB3BE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{499C45A5-E2F5-4141-858A-9072C9BB3BE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{499C45A5-E2F5-4141-858A-9072C9BB3BE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{499C45A5-E2F5-4141-858A-9072C9BB3BE5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {61F56348-3DAC-4A8C-B5EE-F7893414491B}
+	EndGlobalSection
+EndGlobal
