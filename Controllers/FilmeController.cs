@@ -10,12 +10,31 @@ namespace curso_APICore_01.Controllers
     public class FilmeController : ControllerBase
     {
         public static List<Filme> listaFilmes = new List<Filme>();
+        public static int index = 1;
 
         [HttpPost]
-        public void AdicionaFilme([FromBody]Filme filme)
+        public IActionResult AdicionaFilme([FromBody] Filme filme)
         {
+            filme.Id = index++;
             listaFilmes.Add(filme);
             Console.WriteLine(filme.Titulo);
+            return CreatedAtAction(nameof(BuscaFilme), new { Id = filme.Id }, filme);
+        }
+
+        [HttpGet]
+        public IActionResult ListaFilmes()
+        {
+            return Ok(listaFilmes);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult BuscaFilme([FromRoute] int id)
+        {
+            var filme = listaFilmes.Find(x => x.Id == id);
+            if (filme == null)
+                return Ok(filme);
+            else
+                return NotFound();
         }
     }
 }
