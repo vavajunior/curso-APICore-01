@@ -1,14 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace curso_APICore_01.Models
+namespace curso_APICore_01.DTOs
 {
-    public class Filme
+    public class NovoFilmeDTO
     {
-        [Key]
-        [Required]
-        public int Id { get; set; }
-
-        [Required(ErrorMessage ="O campo título é obrigatório")]
+        [Required(ErrorMessage = "O campo título é obrigatório")]
         public string Titulo { get; set; }
         [Required(ErrorMessage = "O campo diretor é obrigatório")]
         public string Diretor { get; set; }

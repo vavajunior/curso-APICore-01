@@ -1,4 +1,7 @@
-﻿using curso_APICore_01.Models;
+﻿using AutoMapper;
+using curso_APICore_01.Data;
+using curso_APICore_01.DTOs;
+using curso_APICore_01.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,32 +12,70 @@ namespace curso_APICore_01.Controllers
     [Route("[controller]")]
     public class FilmeController : ControllerBase
     {
-        public static List<Filme> listaFilmes = new List<Filme>();
-        public static int index = 1;
+        private FilmeContext _context;
+        private IMapper _mapper;
+
+        public FilmeController(FilmeContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
 
         [HttpPost]
-        public IActionResult AdicionaFilme([FromBody] Filme filme)
+        public IActionResult AdicionaFilme([FromBody] NovoFilmeDTO itemDto)
         {
-            filme.Id = index++;
-            listaFilmes.Add(filme);
-            Console.WriteLine(filme.Titulo);
+            var filme = _mapper.Map<Filme>(itemDto);
+
+            _context.Add(filme);
+            _context.SaveChanges();
+
             return CreatedAtAction(nameof(BuscaFilme), new { Id = filme.Id }, filme);
         }
 
         [HttpGet]
-        public IActionResult ListaFilmes()
+        public IEnumerable<Filme> ListaFilmes()
         {
-            return Ok(listaFilmes);
+            return _context.Filmes;
         }
 
         [HttpGet("{id}")]
         public IActionResult BuscaFilme([FromRoute] int id)
         {
-            var filme = listaFilmes.Find(x => x.Id == id);
-            if (filme == null)
-                return Ok(filme);
+            var filme = _context.Find<Filme>(id);
+            if (filme != null)
+            {
+                var itemDto = _mapper.Map<BuscaFilmeDTO>(filme);
+                itemDto.DataConsulta = DateTime.Now;
+                return Ok(itemDto);
+            }
             else
                 return NotFound();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult EditaFilme([FromRoute] int id, [FromBody] EditaFilmeDTO itemDto)
+        {
+            var filme = _context.Find<Filme>(id);
+            if (filme == null)
+                return NotFound();
+
+            _mapper.Map(itemDto, filme);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult RemoveFilme(int id)
+        {
+            var filme = _context.Find<Filme>(id);
+            if (filme == null)
+                return NotFound();
+
+            _context.Remove(filme);
+            _context.SaveChanges();
+
+            return NoContent();
         }
     }
 }
