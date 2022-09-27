@@ -33,9 +33,10 @@ namespace curso_APICore_01.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Filme> ListaFilmes()
+        public IEnumerable<ListaFilmeDTO> ListaFilmes()
         {
-            return _context.Filmes;
+            var lista = _mapper.Map<List<ListaFilmeDTO>>(_context.Filmes);
+            return lista;
         }
 
         [HttpGet("{id}")]
@@ -44,7 +45,7 @@ namespace curso_APICore_01.Controllers
             var filme = _context.Find<Filme>(id);
             if (filme != null)
             {
-                var itemDto = _mapper.Map<BuscaFilmeDTO>(filme);
+                var itemDto = _mapper.Map<ListaFilmeDTO>(filme);
                 itemDto.DataConsulta = DateTime.Now;
                 return Ok(itemDto);
             }

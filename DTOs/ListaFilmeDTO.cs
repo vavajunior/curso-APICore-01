@@ -1,9 +1,8 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace curso_APICore_01.DTOs
 {
-    public class BuscaFilmeDTO
+    public class ListaFilmeDTO
     {
         public int Id { get; set; }
         public string Titulo { get; set; }

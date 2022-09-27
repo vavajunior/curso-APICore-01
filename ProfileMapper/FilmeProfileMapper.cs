@@ -10,7 +10,7 @@ namespace curso_APICore_01.ProfileMapper
         {
             CreateMap<NovoFilmeDTO, Filme>();
             CreateMap<EditaFilmeDTO, Filme>();
-            CreateMap<Filme, BuscaFilmeDTO>();
+            CreateMap<Filme, ListaFilmeDTO>();
         }
     }
 }
