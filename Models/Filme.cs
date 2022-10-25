@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace curso_APICore_01.Models
 {
@@ -8,12 +9,15 @@ namespace curso_APICore_01.Models
         [Required]
         public int Id { get; set; }
 
-        [Required(ErrorMessage ="O campo título é obrigatório")]
+        [Required(ErrorMessage = "O campo título é obrigatório")]
         public string Titulo { get; set; }
         [Required(ErrorMessage = "O campo diretor é obrigatório")]
         public string Diretor { get; set; }
         public string Genero { get; set; }
         [Range(1, 300, ErrorMessage = "A duração deve ter no mínimo 1 e no máximo 300 minutos")]
         public int Duracao { get; set; }
+        public int ClassificacaoEtaria { get; set; }
+
+        public virtual List<Sessao> Sessoes { get; set; }
     }
 }

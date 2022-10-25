@@ -3,8 +3,10 @@ using curso_APICore_01.Data;
 using curso_APICore_01.DTOs;
 using curso_APICore_01.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing.Matching;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace curso_APICore_01.Controllers
 {
@@ -12,10 +14,10 @@ namespace curso_APICore_01.Controllers
     [Route("[controller]")]
     public class FilmeController : ControllerBase
     {
-        private FilmeContext _context;
+        private AppDbContext _context;
         private IMapper _mapper;
 
-        public FilmeController(FilmeContext context, IMapper mapper)
+        public FilmeController(AppDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -28,19 +30,23 @@ namespace curso_APICore_01.Controllers
 
             _context.Add(filme);
             _context.SaveChanges();
-
-            return CreatedAtAction(nameof(BuscaFilme), new { Id = filme.Id }, filme);
+            return CreatedAtAction(nameof(RecuperaFilmePorId), new { Id = filme.Id }, filme);
         }
 
         [HttpGet]
-        public IEnumerable<ListaFilmeDTO> ListaFilmes()
+        public IActionResult ListaFilmes([FromQuery] int? classificacaoEtaria = null)
         {
-            var lista = _mapper.Map<List<ListaFilmeDTO>>(_context.Filmes);
-            return lista;
+            var filmes =  _context.Filmes.ToList();
+            if (classificacaoEtaria.HasValue)
+            {
+                filmes = _context.Filmes.Where(f => f.ClassificacaoEtaria <= classificacaoEtaria).ToList();
+            }
+            var lista = _mapper.Map<List<ListaFilmeDTO>>(filmes);
+            return Ok(lista);
         }
 
         [HttpGet("{id}")]
-        public IActionResult BuscaFilme([FromRoute] int id)
+        public IActionResult RecuperaFilmePorId([FromRoute] int id)
         {
             var filme = _context.Find<Filme>(id);
             if (filme != null)

@@ -7,7 +7,7 @@ using curso_APICore_01.Data;
 
 namespace curso_APICore_01.Migrations
 {
-    [DbContext(typeof(FilmeContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20220811122456_CriandoTabelaFilme")]
     partial class CriandoTabelaFilme
     {
